@@ -18,6 +18,8 @@ function GamePlay() {
     const [boardData, setBoardData] = useState([])
 
     const [MyTurn, setMyTurn] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+
 
     useEffect(()=>{
         socket.emit('join-room', {
@@ -61,6 +63,12 @@ function GamePlay() {
             else{
                 setMyTurn(false)
             }
+          })
+
+          socket.on('winner-found', (data)=>{
+            alert(data.username+" is the Winner")
+            setPlay(false);
+            navigate('/')
           })
 
         // Cleanup socket listeners
@@ -128,7 +136,12 @@ function GamePlay() {
             // Game over, declare the winner
             const WinnerUser = users.find(ele => ele.Symbol === winner)
             if(WinnerUser){
-                alert(WinnerUser.username+ " is the Winner!")
+
+                //alert(WinnerUser.username+ " is the Winner!")
+                socket.emit('winner-found', {
+                    roomID : roomID,
+                    winner : WinnerUser
+                });
             }
             // You can add more logic here, such as displaying a message or resetting the game.
         }
@@ -137,7 +150,7 @@ function GamePlay() {
 
 
     const handleButtonClick = (row, col) => {
-        console.log(MyTurn)
+        //console.log(MyTurn)
         //console.log(row,col)
         setButtonCoordinates({
             row : row,
@@ -178,6 +191,29 @@ function GamePlay() {
     <>
         <div className='container'>
             <div className='user-data-container'>
+
+            <div id="snackbar" className={`snackbar ${snackbarMessage && 'show'}`}>
+                        {snackbarMessage}
+                    </div>
+
+
+                    <button className='button' style={{ marginBottom : "20px" }} onClick={()=>{
+                        navigator.clipboard.writeText(window.location.href).then(()=>{
+                            setSnackbarMessage("URL copied to clipboard");
+                            setTimeout(() => {
+                                setSnackbarMessage('');
+                            }, 3000);
+                        }).catch(error=>{
+                            setSnackbarMessage("Error occured :(");
+                            setTimeout(() => {
+                                setSnackbarMessage('');
+                            }, 3000);
+                            console.log(error);
+                        })
+                    }}>
+                        Copy URL
+                    </button>
+
                 {users && (<>
                     {
                         users.map((item, index)=>{
@@ -187,7 +223,10 @@ function GamePlay() {
                                     display : 'flex',
                                     flexDirection : "row",
                                     justifyContent : 'space-between',
-                                    alignItems : "center"
+                                    alignItems : "center",
+                                    border: MyTurn && item.socketID === socket.id ? '0.5px solid white' : 'none',
+                                    borderRadius : "10px",
+                                    padding : "10px"
                                 }}>
                                     <img src={`${item.avatar}`} alt="Avatar" className="avatar" /> {/* Add the avatar image */}
                                 <h5>
@@ -201,7 +240,9 @@ function GamePlay() {
                 </>)}
             </div>
             {/**Game UI gets rendered here :) */}
-            <div className="game-board">
+            <div className="game-board" style={{
+                marginTop : "25px"
+            }}>
             {renderButtons()}
         </div>
 
