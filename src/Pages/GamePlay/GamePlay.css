@@ -1,0 +1,26 @@
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px); /* Adjust the size as needed */
+    grid-template-rows: repeat(3, 100px); /* Adjust the size as needed */
+    gap: 5px; /* Adjust the gap between buttons */
+}
+
+.board-row {
+    display: flex;
+}
+
+.square {
+    background-color: #f0f0f0;
+    border: 2px solid #ccc;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.square:hover {
+    background-color: #e0e0e0;
+}

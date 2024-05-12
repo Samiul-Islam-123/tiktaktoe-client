@@ -1,0 +1,50 @@
+
+.avatar {
+    width: 80px; /* Adjust width as needed */
+    height: 80px; /* Adjust height as needed */
+    border-radius: 50%; /* Make it circular */
+    margin-bottom: 20px; /* Add some bottom margin for spacing */
+    display: block; /* Ensure it's displayed as a block element */
+    margin-bottom: 10px ; /* Center the avatar horizontally */
+}
+
+
+.input-field {
+    width: 250px;
+    height: 40px;
+    border-radius: 8px;
+    border: none;
+    background-color: #3d3d3d; /* Dark background */
+    color: #fff; /* White text color */
+    padding: 0 10px; /* Add some padding for better appearance */
+    box-sizing: border-box; /* Ensure padding and border are included in width and height */
+    margin-bottom: 5px;
+  }
+  
+  /* Adjust placeholder color if needed */
+  .input-field::placeholder {
+      color: #ccc; /* Light gray placeholder color */
+    }
+    
+    
+    .button {
+        width: 150px;
+        height: 30px;
+        border-radius: 8px;
+        cursor: pointer;
+        background-color: #4285f4; /* Dark blue background */
+        color: #fff; /* White text color */
+        transition: background-color 0.3s ease, transform 0.1s ease; /* Smooth transition for background color and transform */
+        border: none;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        /* Add hover effect */
+      }
+      
+      .button:hover {
+        background-color: #3367d6; /* Darker blue color on hover */
+      }
+      
+      .button:active {
+        transform: scale(0.95); /* Scale down the button slightly on click */
+      }
